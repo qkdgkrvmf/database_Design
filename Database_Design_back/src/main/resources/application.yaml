@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/DBD_pro
+    username: jeongseolhwa
+    password: 0403
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        show_sql: true
+        #        JPA가 실행하는 sql을 보여줌
+        format_sql: true
+        #        좀 더 정리해서 sql을 보여줌
+        use_sql_comments: true
+#        상단에 주석으로 sql 설명
