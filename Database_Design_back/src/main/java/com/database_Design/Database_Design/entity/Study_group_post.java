@@ -12,18 +12,14 @@ import java.util.Date;
 @Setter
 
 @Entity
-public class Study_goal {
+public class Study_group_post {
 
     @Id
-    private Long goal_id;
+    private Long post_id;
 
-    private Long user_id;
+    private Long post_writer;
 
-    private Long std_id;
+    private Date post_date;
 
-    private Date std_goal_start_date;
-
-    private Date std_goal_end_date;
-
-    private String std_goal_archive;
+    private String post_content;
 }
