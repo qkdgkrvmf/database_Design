@@ -22,16 +22,13 @@ public class Study_goal {
     // User와의 다대일 관계 (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", nullable = false) // 외래키 설정
-    private User user; // 회원 ID
+    private User user_id; // 회원 ID
 
-    private String content; // 할 일 설명
+    private String content; // 할 일 내용
 
-//    private Integer priority; // 우선 순위
-//    private Long std_id; // Study group ID
+    private Date std_goal_start_date; // 할 일 시작 날짜
 
-    private Date std_goal_start_date; // 목표 설정 날짜
-
-    private Date std_goal_end_date; // 목표 종료 날짜
+    private Date std_goal_end_date; // 할 일 종료 날짜
 
     private Boolean completed = false; // 완료 여부 (기본값: false)
 
@@ -41,7 +38,7 @@ public class Study_goal {
         this.content = content;
         this.completed = completed;
 //        this.priority = priority;
-        this.user = user;
+        this.user_id = user;
         this.std_goal_end_date = std_goal_end_date;
         this.std_goal_start_date = std_goal_start_date;
     }

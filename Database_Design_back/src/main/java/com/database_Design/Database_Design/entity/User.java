@@ -20,7 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long id; // 기본 키
 
-    private String userid; // 사용자 아이디
+    private String loginId; // 사용자 아이디
 
     private String password; // 비밀번호
 
@@ -32,15 +32,18 @@ public class User {
 
     private String phoneNumber; // 전화번호
 
-    // 추가
-    private Integer dailyStudyTime = 0; // 일별 학습량
-    private Integer weekStudyTime = 0; // 주별 학습량
-    private Integer monthStudyTime = 0; // 월별 학습량
+    private String grade; // 등급
+
+    private Long point; // 포인트
+
+    private Long total_study; // 학습량 - timer에서 외래키로
+
+
 
     @Builder // Builder 패턴 지원
     public User(Long id, String userid, String password, String passwordCheck, String name, Long birth, String phoneNumber) {
         this.id = id;
-        this.userid = userid;
+        this.loginId = userid;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.name = name;
