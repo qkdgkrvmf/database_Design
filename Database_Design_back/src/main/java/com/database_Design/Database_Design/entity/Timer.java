@@ -2,11 +2,14 @@ package com.database_Design.Database_Design.entity;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Timer {
+
+    @Id
     private Long timer_id; // 타이머 식별 기본키
 
     private String timer_title; // 타이머 제목 - 타이머 제목(데이터베이스…)

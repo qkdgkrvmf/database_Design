@@ -32,23 +32,28 @@ public class User {
 
     private String phoneNumber; // 전화번호
 
-    private String grade; // 등급
+    private String grade = "알"; // 등급 (알-금간알-깨진알1-깨진알2-병아리-닭)
 
-    private Long point; // 포인트
+    private Long point = 0L; // 포인트
 
-    private Long total_study; // 학습량 - timer에서 외래키로
+    private Long total_study=0L; // 학습량 - timer에서 외래키로 (분 단위)
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_group") // 외래 키 이름
+    private Study_group study_group; // 스터디 그룹과의 관계
 
     @Builder // Builder 패턴 지원
-    public User(Long id, String userid, String password, String passwordCheck, String name, Long birth, String phoneNumber) {
+    public User(Long id, String loginId, String password, String passwordCheck, String name, Long birth, String phoneNumber, String grade, Long point, Long total_study) {
         this.id = id;
-        this.loginId = userid;
+        this.loginId = loginId;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.name = name;
         this.birth = birth;
         this.phoneNumber = phoneNumber;
+        this.grade = grade;
+        this.point = point;
+        this.total_study = total_study;
     }
 
     // Study_goal과의 관계 (1:N)

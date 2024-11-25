@@ -24,6 +24,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	compileOnly 'org.projectlombok:lombok' // 롬복 의존성 추가
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 비밀번호 암호화 의존성 추가
+
 }
 
 tasks.named('test') {

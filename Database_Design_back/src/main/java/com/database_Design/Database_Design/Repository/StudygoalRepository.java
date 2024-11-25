@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface StudygoalRepository extends JpaRepository<Study_goal,Long> {
+
     // 특정 사용자의 모든 할 일 조회
     List<Study_goal> findAllByUser(User user);
 }
