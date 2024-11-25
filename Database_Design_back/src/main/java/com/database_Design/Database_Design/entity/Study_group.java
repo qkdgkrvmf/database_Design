@@ -43,7 +43,7 @@ public class Study_group {
 
     private Date std_end_date; // LocalDateTime 사용
 
-    private Study_group_post group_rule; // 스터디 규칙 - 게시판 내용(공지사항)과 매핑
+    private String group_rule; // 스터디 규칙 - 게시판 내용(공지사항)과 매핑
 
     @Column(name = "stdstate") // JPA가 정확하게 std_state를 이해하게 함
     private Boolean stdstate = true; // 스터디 모집 여부(true - 모집, false - 모집X)
