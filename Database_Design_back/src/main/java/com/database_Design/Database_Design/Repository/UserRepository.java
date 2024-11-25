@@ -1,10 +1,7 @@
 package com.database_Design.Database_Design.Repository;
 
-import com.database_Design.Database_Design.entity.Study_goal;
 import com.database_Design.Database_Design.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
