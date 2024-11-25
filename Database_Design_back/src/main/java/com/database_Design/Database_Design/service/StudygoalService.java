@@ -18,9 +18,9 @@ public class StudygoalService {
     private final UserRepository userRepository;
 
     // 할 일 추가
-    public Study_goal addGoal(String userid, String content, Date std_goal_start_date, Date std_goal_end_date) {
+    public Study_goal addGoal(String user_id, String content, Date std_goal_start_date, Date std_goal_end_date) {
         // User 조회
-        User user = userRepository.findByUserid(userid)
+        User user = userRepository.findByLoginId(user_id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         // 새 목표 생성
@@ -29,7 +29,7 @@ public class StudygoalService {
                 .std_goal_start_date(std_goal_start_date)
                 .std_goal_end_date(std_goal_end_date)
                 .completed(false) // 기본값 설정
-                .user(user)
+                .user_id(user)
                 .build();
 
         return studyGoalRepository.save(goal);
@@ -67,7 +67,7 @@ public class StudygoalService {
 
     // 사용자별 할 일 목록 조회
     public List<Study_goal> getGoalsByUser(String userId) {
-        User user = userRepository.findByUserid(userId)
+        User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         return studyGoalRepository.findAllByUser(user);
