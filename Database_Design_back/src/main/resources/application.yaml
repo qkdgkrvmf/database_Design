@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: mysql://localhost:3306/DBD_pro
+    url: jdbc:mysql://localhost:3306/DBD
     username: jeongseolhwa
-    password: 04030403!
+    password: Jmsq0807!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     properties:
