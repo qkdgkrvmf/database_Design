@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import java.util.Date;
 
 @Entity
-public class StudygroupStudy {
+public class Study_group_Study { // 스터디 그룹 학습량
 
     private Long study_group_id;
 
