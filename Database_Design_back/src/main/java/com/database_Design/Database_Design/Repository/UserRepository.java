@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // userId를 기준으로 사용자 조회
     Optional<User> findByLoginId(String loginId);
+
+    
 }
