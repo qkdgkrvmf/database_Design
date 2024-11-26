@@ -86,15 +86,15 @@ public class StudygroupService {
 
         Study_group savedGroup = studyGroupRepository.save(studyGroup);
 
-        // 게시판 생성 및 연결
-        Study_group_post studyGroupPost = new Study_group_post();
-        studyGroupPost.setGroup_notice(notice);
-        studyGroupPost.setGroup_post_id(1L); // 첫 게시글 ID (규칙)
-        studyGroupPost.setGroup_post_content("규칙: " + notice);
-        studyGroupPost.setGroup_post_writer(leader.getLoginId());
-        studyGroupPost.setGroup_post_date(new Date());
-
-        studygrouppostRepository.save(studyGroupPost);
+//        // 게시판 생성 및 연결
+//        Study_group_post studyGroupPost = new Study_group_post();
+//        studyGroupPost.setGroup_notice(notice);
+//        studyGroupPost.setGroup_post_id(1L); // 첫 게시글 ID (규칙)
+//        studyGroupPost.setGroup_post_content("규칙: " + notice);
+//        studyGroupPost.setGroup_post_writer(leader.getLoginId());
+//        studyGroupPost.setGroup_post_date(new Date());
+//
+//        studygrouppostRepository.save(studyGroupPost);
 
         return savedGroup;
     }
