@@ -91,7 +91,7 @@ public class StudygroupService {
         studyGroupPost.setGroup_notice(notice);
         studyGroupPost.setGroup_post_id(1L); // 첫 게시글 ID (규칙)
         studyGroupPost.setGroup_post_content("규칙: " + notice);
-        studyGroupPost.setGroup_post_writer(leader.getLoginId());
+        studyGroupPost.setGroup_post_writer(leader.getId()); // getLoginID였는데 내가 바꿨어 문제 생기면 말해줘!!
         studyGroupPost.setGroup_post_date(new Date());
 
         studygrouppostRepository.save(studyGroupPost);

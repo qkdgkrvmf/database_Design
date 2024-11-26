@@ -1,158 +1,107 @@
-//package com.database_Design.Database_Design.service;
-//
-//import com.database_Design.Database_Design.Repository.StudygrouppostRepository;
-//import com.database_Design.Database_Design.Repository.StudyMemoryRepository;
-//import com.database_Design.Database_Design.entity.Studygrouppost;
-//import com.database_Design.Database_Design.entity.StudyMemory;
-//import com.database_Design.Database_Design.entity.Studygroup;
-//import com.database_Design.Database_Design.entity.User;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//import java.util.Optional;
-//import java.util.stream.Collectors;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class StudygrouppostService {
-//
-//	// 게시글 저장소와 연동
-//	private final StudygrouppostRepository studygrouppostRepository;
-//
-//	// 스터디 그룹 서비스 (그룹 관련 기능 제공)
-//	private final StudygroupService studygroupService;
-//
-//	// 사용자 서비스 (회원 정보 관리 기능 제공)
-//	private final UserService userService;
-//
-//	/**
-//	 * 공지사항 등록
-//	 * 그룹장만 공지사항을 작성할 수 있도록 제한
-//	 *
-//	 * @param group_id 스터디 그룹 ID
-//	 * @param user_id  작성자 ID
-//	 * @param post_content  게시글 내용
-//	 * @return 작성된 Studygrouppost 객체
-//	 */
-//	public Studygrouppost createNotice(Long group_id, Long user_id, String post_content) {
-//		// 스터디 그룹 가져오기
-//		Studygroup studygroup = studygroupService.getStudygroupById(group_id);
-//
-//		// 그룹장 여부 확인
-//		if (!studygroup.getStdLeader().equals(user_id)) {
-//			throw new IllegalArgumentException("공지사항은 그룹장만 작성할 수 있습니다.");
-//		}
-//
-//		// 공지사항 생성
-//		Studygrouppost notice = Studygrouppost.builder()
-//				.postWriter(user_id)
-//				.groupId(group_id)
-//				.postContent(post_content)
-//				.isNotice(true) // 공지사항 여부 플래그 설정
-//				.build();
-//
-//		return studygrouppostRepository.save(notice); // DB에 저장
-//	}
-//
-//	/**
-//	 * 공지사항 수정
-//	 * 그룹장만 공지사항 수정 가능
-//	 *
-//	 * @param post_id    게시글 ID
-//	 * @param user_id    수정 요청한 사용자 ID
-//	 * @param newContent 수정할 내용
-//	 * @return 수정된 Studygrouppost 객체
-//	 */
-//	public Studygrouppost updateNotice(Long post_id, Long user_id, String newContent) {
-//		// 게시글 가져오기
-//		Studygrouppost post = studygrouppostRepository.findById(post_id)
-//				.orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
-//
-//		// 그룹 정보 확인
-//		Studygroup studygroup = studygroupService.getStudygroupById(post.getGroupId());
-//
-//		// 그룹장 여부 확인
-//		if (!studygroup.getStdLeader().equals(user_id)) {
-//			throw new IllegalArgumentException("공지사항 수정 권한이 없습니다.");
-//		}
-//
-//		// 게시글 내용 수정
-//		post.setPostContent(newContent);
-//		return studygrouppostRepository.save(post); // 수정된 게시글 저장
-//	}
-//
-//	/**
-//	 * 공용 게시글 작성
-//	 * 그룹의 멤버만 게시글 작성 가능
-//	 *
-//	 * @param group_id 스터디 그룹 ID
-//	 * @param user_id  작성자 ID
-//	 * @param post_content  게시글 내용
-//	 * @return 작성된 Studygrouppost 객체
-//	 */
-//	public Studygrouppost createPost(Long group_id, Long user_id, String post_content) {
-//		// 스터디 그룹 확인
-//		Studygroup studygroup = studygroupService.getStudygroupById(group_id);
-//
-//		// 그룹 멤버 여부 확인
-//		if (!studygroupService.isGroupMember(group_id, user_id)) {
-//			throw new IllegalArgumentException("스터디 그룹 멤버만 게시글을 작성할 수 있습니다.");
-//		}
-//
-//		// 게시글 생성
-//		Studygrouppost post = Studygrouppost.builder()
-//				.postWriter(user_id)
-//				.groupId(group_id)
-//				.postContent(post_content)
-//				.isNotice(false) // 공용 게시글 여부 설정
-//				.build();
-//
-//		return studygrouppostRepository.save(post); // DB에 저장
-//	}
-//
-//	/**
-//	 * 공용 게시글 수정
-//	 * 작성자 또는 그룹장만 수정 가능
-//	 *
-//	 * @param post_id    게시글 ID
-//	 * @param user_id    수정 요청한 사용자 ID
-//	 * @param newContent 수정할 내용
-//	 * @return 수정된 Studygrouppost 객체
-//	 */
-//	public Studygrouppost updatePost(Long post_id, Long user_id, String newContent) {
-//		// 게시글 가져오기
-//		Studygrouppost post = studygrouppostRepository.findById(post_id)
-//				.orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
-//
-//		// 그룹 정보 확인
-//		Studygroup studygroup = studygroupService.getStudygroupById(post.getGroupId());
-//
-//		// 작성자 또는 그룹장 여부 확인
-//		if (!post.getPostWriter().equals(user_id) && !studygroup.getStdLeader().equals(user_id)) {
-//			throw new IllegalArgumentException("게시글 수정 권한이 없습니다.");
-//		}
-//
-//		// 게시글 내용 수정
-//		post.setPostContent(newContent);
-//		return studygrouppostRepository.save(post); // 수정된 게시글 저장
-//	}
-//
-//	/**
-//	 * 스터디 그룹 내 멤버 공부 순위 조회
-//	 * 하루 공부량 기준으로 정렬 후 상위 5명 반환
-//	 *
-//	 * @param group_id 스터디 그룹 ID
-//	 * @return 상위 5명의 사용자 리스트
-//	 */
-//	public List<User> getStudyRanking(Long group_id) {
-//		// 그룹 멤버 가져오기
-//		List<User> members = studygroupService.getGroupMembers(group_id);
-//
-//		// 공부량 기준 내림차순 정렬 (하루 공부량 필드: dailyStudyTime)
-//		return members.stream()
-//				.sorted((u1, u2) -> Long.compare(u2.getDailyStudyTime(), u1.getDailyStudyTime())) // 내림차순 정렬
-//				.limit(5) // 상위 5명만 반환
-//				.collect(Collectors.toList());
-//	}
-//}
+package com.database_Design.Database_Design.service;
+
+import com.database_Design.Database_Design.Repository.StudygrouppostRepository;
+import com.database_Design.Database_Design.Repository.StudygroupRepository;
+import com.database_Design.Database_Design.entity.Study_group;
+import com.database_Design.Database_Design.entity.Study_group_post;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+
+@Service
+@RequiredArgsConstructor
+public class StudygrouppostService {
+
+	private final StudygroupRepository studyGroupRepository;
+	private final StudygrouppostRepository studyGroupPostRepository;
+
+	@Transactional
+	public void createOrUpdateNotice(Long std_id, Long user_id, String noticeContent) {
+		// 1. 스터디 그룹 확인
+		Study_group studyGroup = studyGroupRepository.findById(std_id)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+
+		// 2. 요청자가 스터디장인지 확인
+		if (!studyGroup.getStd_leader().getId().equals(user_id)) {
+			throw new SecurityException("공지사항 작성 권한이 없습니다.");
+		}
+
+		// 3. 기존 공지사항 확인
+		Study_group_post existingNotice = studyGroupPostRepository.findById(std_id).orElse(null);
+
+		if (existingNotice != null) {
+			// 기존 공지사항이 있으면 내용 업데이트
+			existingNotice.setGroup_notice(noticeContent);
+			studyGroupPostRepository.save(existingNotice);
+		} else {
+			// 공지사항이 없으면 새로 생성
+			Study_group_post newNotice = new Study_group_post();
+			newNotice.setGroup_id(std_id); // 스터디 그룹 ID 설정
+			newNotice.setGroup_notice(noticeContent); // 공지사항 내용 설정
+			newNotice.setGroup_post_writer(studyGroup.getStd_leader().getId()); // 수정된 부분: Long 타입 설정
+			newNotice.setGroup_post_date(new Date()); // 작성일 설정
+			studyGroupPostRepository.save(newNotice);
+		}
+	}
+
+	@Transactional
+	public void createGroupPost(Long std_id, Long user_id, String postContent) {
+		// 1. 스터디 그룹 확인
+		Study_group studyGroup = studyGroupRepository.findById(std_id)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+
+		// 2. 스터디 멤버 여부 확인 (작성 권한)
+		boolean isMember = studyGroup.getStd_members().stream()
+				.anyMatch(member -> member.getId().equals(user_id));
+
+		if (!isMember) {
+			throw new SecurityException("스터디 멤버만 게시글을 작성할 수 있습니다.");
+		}
+
+		// 3. 새로운 게시글 생성
+		Study_group_post newPost = new Study_group_post();
+		newPost.setStudyGroup(studyGroup); // 외래키로 스터디 그룹 설정
+		newPost.setGroup_post_writer(user_id); // 게시글 작성자 설정
+		newPost.setGroup_post_content(postContent); // 게시글 내용 설정
+		newPost.setGroup_post_date(new Date()); // 작성일 설정
+
+		// 4. 저장
+		studyGroupPostRepository.save(newPost);
+	}
+
+
+	@Transactional
+	public void updateGroupPost(Long post_id, Long user_id, String updatedContent) {
+		// 1. 게시글 확인
+		Study_group_post post = studyGroupPostRepository.findById(post_id)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+
+		// 2. 수정 권한 확인 (작성자 또는 스터디장만 가능)
+		if (!post.getGroup_post_writer().equals(user_id) &&
+				!post.getStudyGroup().getStd_leader().getId().equals(user_id)) {
+			throw new SecurityException("게시글 수정 권한이 없습니다.");
+		}
+
+		// 3. 게시글 내용 수정
+		post.setGroup_post_content(updatedContent);
+		studyGroupPostRepository.save(post);
+	}
+
+	@Transactional
+	public void deleteGroupPost(Long post_id, Long user_id) {
+		// 1. 게시글 확인
+		Study_group_post post = studyGroupPostRepository.findById(post_id)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+
+		// 2. 삭제 권한 확인 (작성자 또는 스터디장만 가능)
+		if (!post.getGroup_post_writer().equals(user_id) &&
+				!post.getStudyGroup().getStd_leader().getId().equals(user_id)) {
+			throw new SecurityException("게시글 삭제 권한이 없습니다.");
+		}
+
+		// 3. 게시글 삭제
+		studyGroupPostRepository.delete(post);
+	}
+}
