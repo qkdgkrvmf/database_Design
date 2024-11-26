@@ -996,7 +996,6 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </collation>
     <schema id="288" parent="1" name="dbd">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-11-25.18:46:45</LastIntrospectionLocalTimestamp>
       <LastIntrospectionLocalTimestamp>2024-11-26.07:24:21</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
