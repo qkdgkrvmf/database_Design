@@ -87,7 +87,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    // 등급 계산 (1000pt마다 등급 업그레이드)
+    // 등급 계산 - 포인트 기반으로 등급 계산(1000pt마다 등급 업그레이드)
     private String calculateGrade(Long point) {
         if (point >= 5000) {
             return "알";
@@ -105,12 +105,12 @@ public class UserService {
     }
 
     // 포인트 계산 (총 학습량 10분 당 1pt 추가)
-    public void updatePointsAndGrade(String userid, Long studyMinutes) {
+    public void updatePointsAndGrade(String userid, Long timer_total) { // 사용자와 총 학습량으로 포인트 계산
         User user = userRepository.findByLoginId(userid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
         // 학습량 업데이트
-        user.setTotal_study(user.getTotal_study() + studyMinutes);
+        user.setTotal_study(user.getTotal_study() + timer_total);
 
         // 포인트 계산: 총 학습량 10분당 1pt
         user.setPoint(user.getTotal_study() / 10);
@@ -121,4 +121,5 @@ public class UserService {
         // 업데이트된 유저 정보 저장
         userRepository.save(user);
     }
+
 }
