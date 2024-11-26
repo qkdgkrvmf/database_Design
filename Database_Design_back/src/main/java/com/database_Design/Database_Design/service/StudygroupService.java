@@ -86,6 +86,7 @@ public class StudygroupService {
 
         Study_group savedGroup = studyGroupRepository.save(studyGroup);
 
+
 //        // 게시판 생성 및 연결
 //        Study_group_post studyGroupPost = new Study_group_post();
 //        studyGroupPost.setGroup_notice(notice);
