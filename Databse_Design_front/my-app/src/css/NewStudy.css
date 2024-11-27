@@ -1,0 +1,64 @@
+.study-creation-container {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #FFF0C2;
+    padding: 20px;
+  }
+  
+  .study-name-container,
+  .study-description-container,
+  .max-participants-container,
+  .study-rules-container,
+  .study-duration-container {
+    position: relative;
+    width: 345px;
+    height: 53px;
+    background: #FDF9EC;
+    border: 3px solid #FFD764;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-right: 10px;
+  }
+  
+  input,
+  textarea {
+    flex: 1;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.42);
+    border: none;
+    background-color: transparent;
+  }
+  
+  .create-study-button {
+    position: absolute;
+    width: 340px;
+    height: 41.35px;
+    left: 25px;
+    bottom: 20px;
+    background: #FFD764;
+    border: 5px solid #FFD764;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.42);
+  }

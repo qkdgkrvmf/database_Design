@@ -1,0 +1,63 @@
+.signup-container {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #FFF0C2;
+    border-radius: 20px;
+  }
+  
+  .signup-title {
+    position: absolute;
+    width: 107px;
+    height: 30px;
+    left: 159px;
+    top: 41px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #5A5858;
+    border: 0.5px solid #5A5858;
+  }
+  
+  .id-group {
+    position: absolute;
+    width: 211px;
+    height: 49.14px;
+    left: 24px;
+    top: 143.67px;
+  }
+  
+  .id-label {
+    position: absolute;
+    width: 124px;
+    height: 22px;
+    left: 36px;
+    top: 114px;
+    font-family: 'AppleSDGothicNeoSB00';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+  }
+  
+  .id-input {
+    box-sizing: border-box;
+    position: absolute;
+    width: 211px;
+    height: 49.14px;
+    background: #FDFBF4;
+    border: 3px solid #FFD764;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.42);
+    padding: 16px;
+  }
+  
+  /* Add similar styles for other input groups */

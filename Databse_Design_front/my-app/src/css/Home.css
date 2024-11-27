@@ -1,0 +1,73 @@
+.home-container {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #FFF0C2;
+  }
+  
+  .all-in-me {
+    position: absolute;
+    width: 180px;
+    height: 43px;
+    left: calc(50% - 180px/2 + 4.5px);
+    top: 241px;
+    font-family: 'Baloo Chettan';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 58px;
+    text-align: center;
+    color: rgba(252, 139, 25, 0.79);
+  }
+  
+  .name {
+    position: absolute;
+    width: 67px;
+    height: 28px;
+    left: calc(50% - 67px/2 + 1px);
+    top: 293px;
+    font-family: 'HS산토끼체 2.0';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    color: rgba(252, 139, 25, 0.79);
+  }
+  
+  .login {
+    position: absolute;
+    width: 79px;
+    height: 34px;
+    left: 122px;
+    top: 575px;
+    font-family: 'AppleSDGothicNeoEB00';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    color: rgba(252, 139, 25, 0.8);
+  }
+  
+  .signup {
+    position: absolute;
+    width: 116px;
+    height: 37px;
+    left: 183px;
+    top: 575px;
+    font-family: 'AppleSDGothicNeoEB00';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    color: rgba(252, 139, 25, 0.8);
+  }
+  
+  .image {
+    position: absolute;
+    width: 282px;
+    height: 243px;
+    left: 55px;
+    top: 321px;
+    background: url(image.png);
+  }

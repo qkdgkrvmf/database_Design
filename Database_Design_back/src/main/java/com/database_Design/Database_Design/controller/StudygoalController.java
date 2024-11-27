@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/studygoal")
+@RequestMapping("/studygoal")
 @RequiredArgsConstructor
 public class StudygoalController {
 
