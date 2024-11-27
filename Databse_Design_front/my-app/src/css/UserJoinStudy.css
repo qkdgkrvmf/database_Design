@@ -1,0 +1,57 @@
+.container {
+    position: relative;
+    width: 393px;
+    height: 868px;
+    background: #FFF0C2;
+  }
+  
+  .header {
+    position: absolute;
+    width: 393px;
+    height: 115px;
+    left: 0;
+    top: 0;
+    background: rgba(255, 211, 83, 0.29);
+  }
+  
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 14px;
+  }
+  
+  .logo {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #5A5858;
+    border: 0.5px solid #5A5858;
+  }
+  
+  .menu-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .header-bottom {
+    position: absolute;
+    width: 393px;
+    height: 34px;
+    left: 0;
+    top: 81px;
+    background: #FFD764;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+  }
+  
+  /* Add more styles for other sections */

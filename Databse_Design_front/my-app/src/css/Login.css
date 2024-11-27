@@ -1,0 +1,121 @@
+.login-container {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #FFF0C2;
+  }
+  
+  .id-group,
+  .password-group {
+    position: absolute;
+    width: 305px;
+    height: 65px;
+    left: 44px;
+  }
+  
+  .id-group {
+    top: 336px;
+  }
+  
+  .password-group {
+    top: 420px;
+  }
+  
+  .input-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: #FDF9EC;
+    border: 3px solid #FFD764;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .id-input,
+  .password-input {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: rgba(0, 0, 0, 0.42);
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+  }
+  
+  .login-button-group {
+    position: absolute;
+    width: 305px;
+    height: 65px;
+    left: 44px;
+    top: 504px;
+  }
+  
+  .login-button {
+    width: 100%;
+    height: 100%;
+    background: #FFD764;
+    border: 5px solid #FFD764;
+    border-radius: 20px;
+    font-family: 'AppleSDGothicNeoH00';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .signup-password-recovery {
+    position: absolute;
+    width: 223px;
+    height: 24px;
+    left: 98px;
+    top: 588px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .signup-link,
+  .password-recovery-link {
+    font-family: 'AppleSDGothicNeoEB00';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #FC8B19;
+    text-decoration: none;
+  }
+  
+  .separator {
+    margin: 0 10px;
+    color: #FC8B19;
+  }
+  
+  .logo-group {
+    position: absolute;
+    width: 193px;
+    height: 146.68px;
+    left: 141px;
+    top: 182px;
+  }
+  
+  .logo-image {
+    width: 113px;
+    height: 116.68px;
+    background: url(image.png);
+  }
+  
+  .logo-text {
+    font-family: 'HS산토끼체 2.0';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+    text-align: center;
+  }
