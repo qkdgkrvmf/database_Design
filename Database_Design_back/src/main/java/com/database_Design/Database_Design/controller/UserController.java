@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -22,7 +23,9 @@ public class UserController {
         String password = (String) userDetails.get("password");
         String passwordCheck = (String) userDetails.get("passwordCheck");
         String name = (String) userDetails.get("name");
-        Long birth = Long.valueOf((String) userDetails.get("birth"));
+        // 수정
+        String birthString = (String) userDetails.get("birth");
+        LocalDate birth = LocalDate.parse(birthString); // ISO-8601 포맷 (yyyy-MM-dd)으로 변환
         String phoneNumber = (String) userDetails.get("phoneNumber");
 
         User newUser = userService.registerUser(loginId, password, passwordCheck, name, birth, phoneNumber);
@@ -56,8 +59,8 @@ public class UserController {
     @PostMapping("/update-points")
     public ResponseEntity<String> updatePoints(@RequestBody Map<String, Object> updateDetails) {
         String loginId = (String) updateDetails.get("loginId");
-        Long studyMinutes = Long.valueOf((String) updateDetails.get("studyMinutes"));
-        userService.updatePointsAndGrade(loginId, studyMinutes);
+        Long total_study = (Long) updateDetails.get("total_study");
+        userService.updatePointsAndGrade(loginId, total_study);
         return ResponseEntity.ok("포인트 및 등급이 성공적으로 업데이트되었습니다.");
     }
 }

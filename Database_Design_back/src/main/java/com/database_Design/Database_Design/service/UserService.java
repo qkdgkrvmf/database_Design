@@ -6,6 +6,7 @@ import com.database_Design.Database_Design.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -16,12 +17,18 @@ public class UserService {
 
 
     // 회원가입
-    public User registerUser(String loginId, String password, String passwordCheck, String name, Long birth, String phoneNumber) {
+    public User registerUser(String loginId, String password, String passwordCheck, String name, LocalDate birth, String phoneNumber) {
         // 기존 회원 중복 확인
         Optional<User> existingUser = userRepository.findByLoginId(loginId);
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 회원 ID입니다.");
         }
+        
+        // 아이디 중복 확인
+        if (userRepository.existsByLoginId(loginId)) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        }
+
 
         // 새 회원 생성 및 초기값 설정
         User newUser = User.builder()
@@ -90,36 +97,45 @@ public class UserService {
     // 등급 계산 - 포인트 기반으로 등급 계산(1000pt마다 등급 업그레이드)
     private String calculateGrade(Long point) {
         if (point >= 5000) {
-            return "알";
-        } else if (point >= 4000) {
-            return "금간알";
-        } else if (point >= 3000) {
-            return "깨진알1";
-        } else if (point >= 2000) {
-            return "깨진알2";
-        } else if (point >= 1000) {
-            return "병아리";
-        } else {
             return "닭";
+        } else if (point >= 4000) {
+            return "병아리";
+        } else if (point >= 3000) {
+            return "깨진알2";
+        } else if (point >= 2000) {
+            return "깨진알1";
+        } else if (point >= 1000) {
+            return "금간알";
+        } else {
+            return "알";
         }
     }
 
-    // 포인트 계산 (총 학습량 10분 당 1pt 추가)
-    public void updatePointsAndGrade(String userid, Long timer_total) { // 사용자와 총 학습량으로 포인트 계산
+    // 사용자의 학습 시간을 기반으로 학습량, 포인트, 등급 업데이트
+    public void updatePointsAndGrade(String userid, Long timer_total) {
         User user = userRepository.findByLoginId(userid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
-        // 학습량 업데이트
+        updateTotalStudy(user, timer_total);  // 학습량 업데이트
+        updatePoints(user, timer_total);     // 포인트 업데이트
+        updateGrade(user);                   // 등급 업데이트
+
+        userRepository.save(user);           // 업데이트된 유저 정보 저장
+    }
+
+    // 총 학습량 업데이트
+    private void updateTotalStudy(User user, Long timer_total) {
         user.setTotal_study(user.getTotal_study() + timer_total);
+    }
 
-        // 포인트 계산: 총 학습량 10분당 1pt
-        user.setPoint(user.getTotal_study() / 10);
+    // 포인트 업데이트
+    private void updatePoints(User user, Long timer_total) {
+        user.setPoint(user.getPoint() + (timer_total / 10));
+    }
 
-        // 등급 계산
+    // 등급 업데이트
+    private void updateGrade(User user) {
         user.setGrade(calculateGrade(user.getPoint()));
-
-        // 업데이트된 유저 정보 저장
-        userRepository.save(user);
     }
 
 }
