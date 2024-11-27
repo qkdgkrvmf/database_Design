@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class User {
 
     private String name; // 이름
 
-    private Long birth; // 생년월일
+    private LocalDate birth; // 생년월일
 
     private String phoneNumber; // 전화번호
 
@@ -43,7 +44,7 @@ public class User {
     private Study_group study_group; // 스터디 그룹과의 관계
 
     @Builder // Builder 패턴 지원
-    public User(Long id, String loginId, String password, String passwordCheck, String name, Long birth, String phoneNumber, String grade, Long point, Long total_study) {
+    public User(Long id, String loginId, String password, String passwordCheck, String name, LocalDate birth, String phoneNumber, String grade, Long point, Long total_study) {
         this.id = id;
         this.loginId = loginId;
         this.password = password;
