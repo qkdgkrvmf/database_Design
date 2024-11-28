@@ -1,0 +1,92 @@
+.join-study {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #FFF0C2;
+  }
+  
+  .name-container,
+  .occupation-container,
+  .introduction-container {
+    position: absolute;
+    width: 345px;
+    height: 53px;
+    left: 30px;
+    background: #FDF9EC;
+    border: 3px solid #FFD764;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  
+  .name-container {
+    top: 222px;
+  }
+  
+  .occupation-container {
+    top: 340px;
+  }
+  
+  .introduction-container {
+    top: 458px;
+    height: 100.01px;
+  }
+  
+  .name-container label,
+  .occupation-container label,
+  .introduction-container label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    margin-right: 16px;
+  }
+  
+  .name-container input,
+  .occupation-container input,
+  .introduction-container textarea {
+    flex: 1;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.42);
+    border: none;
+    background: transparent;
+  }
+  
+  .agreement-container {
+    position: absolute;
+    top: 584px;
+    left: 69px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #B7B7B7;
+  }
+  
+  .join-button-container {
+    position: absolute;
+    top: 706px;
+    left: 102px;
+  }
+  
+  .join-button {
+    width: 197px;
+    height: 35px;
+    background: #FFD764;
+    border-radius: 17px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: #5A5858;
+    border: 0.5px solid #5A5858;
+  }
