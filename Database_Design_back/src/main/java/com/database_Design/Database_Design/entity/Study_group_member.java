@@ -21,15 +21,16 @@ public class Study_group_member {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false) // Study_group과 연결
-    private Study_group studyGroup; // 스터디 그룹 - 스터디 식별
+    private Study_group studyGroup; // 스터디 그룹 - 스터디 식별(멤버가 어떤 스터디 그룹에 소속되어있는지 정확하게 하기 위함 >> 데이터 무결성 유지)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false) // User의 외래 키
-    private User user_id; // User 엔티티와 매핑 - 스터디 멤버 사용자
+    private User user_id; // User 엔티티와 매핑 - 스터디 멤버 사용자(해당 멤버가 어떤 사용자를 나타내는지 정확하게 하기 위함 >> user_id를 통해 특정 사용자가 속한 그룹 리스트 확인 가능)
 
 //    private String join; // 참여 상태
 
     @OneToMany(mappedBy = "group_post_writer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Study_group_post> posts = new ArrayList<>(); // 사용자가 작성한 게시글 리스트
-    private String role; // 역할
+    private List<Study_group_post> posts = new ArrayList<>(); // 스터디 그룹 멤버가 작성한 게시글 리스트와 매핑하기 위한 변수 선언
+    
+    private String role; // 스터디 내 역할(스터디장, 스터디원)
 }

@@ -22,8 +22,8 @@ public class Study_goal {
     // User와의 다대일 관계 (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false) // 외래키 설정
-    private User user; // User 각각의 고유 식별 값 (User 객체를 매핑)
 
+    private User user; // User 각각의 고유 식별 값 (User 객체를 매핑)
 
     private String content; // User가 하고자 하는 '할 일'의 내용
 

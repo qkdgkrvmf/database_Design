@@ -22,11 +22,11 @@ public class Timer {
 
     @ManyToOne(fetch = FetchType.LAZY) // 사용자와의 관계 설정
     @JoinColumn(name = "user_id", nullable = false) // 외래 키 컬럼 이름
-    private User user; // 사용자 정보 - 외래키
+    private User user; // 타이머를 사용하고 있는 사용자를 매핑하기 위한 변수 선언
 
     @ManyToOne(fetch = FetchType.LAZY) // 스터디 그룹과의 관계 설정
     @JoinColumn(name = "study_group_id", nullable = true) // 외래 키 컬럼 이름
-    private Study_group studyGroup; // 스터디 그룹 ID - 외래키
+    private Study_group studyGroup; // 타이머를 사용하고 있는 스터디 그룹을 매핑하기 위한 변수 선언
 
     @Column(name = "timer_start")
     private LocalDateTime timerStart; // 타이머 시작 시점
@@ -34,6 +34,6 @@ public class Timer {
     @Column(name = "timer_end")
     private LocalDateTime timerEnd; // 타이머 종료 시점
 
-    private Long timer_total; // 학습량
+    private Long timer_total; // 학습량(타이머 종료시점 - 타이머 시작 시점)
 
 }
