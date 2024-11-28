@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +69,7 @@ public class StudygrouppostService {
 
 		// 2. 스터디 멤버 여부 확인
 		Study_group_member member = studyGroup.getStd_members().stream()
-				.filter(m -> m.getUser_id().getId().equals(member_id)) // User의 ID와 비교
+				.filter(m -> m.getUser().getId().equals(member_id)) // User의 ID와 비교
 				.findFirst()
 				.orElseThrow(() -> new SecurityException("스터디 멤버만 게시글을 작성할 수 있습니다."));
 

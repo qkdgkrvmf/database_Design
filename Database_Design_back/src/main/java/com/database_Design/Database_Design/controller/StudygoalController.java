@@ -46,12 +46,12 @@ public class StudygoalController {
 	 * @param endDate   수정할 종료 날짜
 	 * @return 수정된 Study_goal 객체
 	 */
-	@PutMapping("/{goalId}")
+	@PutMapping("/update/{goalId}")
 	public ResponseEntity<Study_goal> updateGoal(
 			@PathVariable Long goalId,
 			@RequestParam String content,
-			@RequestParam Date startDate,
-			@RequestParam Date endDate) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, // 문자열을 Date로 변환
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate) {
 
 		Study_goal updatedGoal = studygoalService.updateGoal(goalId, content, startDate, endDate);
 		return ResponseEntity.ok(updatedGoal);
@@ -63,7 +63,7 @@ public class StudygoalController {
 	 * @param goalId 목표 ID
 	 * @return 성공 메시지
 	 */
-	@DeleteMapping("/{goalId}")
+	@DeleteMapping("/delete/{goalId}")
 	public ResponseEntity<String> deleteGoal(@PathVariable Long goalId) {
 		studygoalService.deleteGoal(goalId);
 		return ResponseEntity.ok("목표가 성공적으로 삭제되었습니다.");
@@ -88,8 +88,12 @@ public class StudygoalController {
 	 * @return 사용자의 목표 목록
 	 */
 	@GetMapping("/{userId}/list")
-	public ResponseEntity<List<Study_goal>> getGoalsByUser(@PathVariable String userId) {
+	public ResponseEntity<?> getGoalsByUser(@PathVariable String userId) { // 아이디(Login_id - String 타입)로 리스트 조회
 		List<Study_goal> userGoals = studygoalService.getGoalsByUser(userId);
+		if (userGoals.isEmpty()) {
+			return ResponseEntity.ok("사용자의 목표가 없습니다.");
+		}
 		return ResponseEntity.ok(userGoals);
 	}
+
 }

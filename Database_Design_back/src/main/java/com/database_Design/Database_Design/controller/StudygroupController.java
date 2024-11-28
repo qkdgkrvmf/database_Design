@@ -3,6 +3,7 @@ package com.database_Design.Database_Design.controller;
 import com.database_Design.Database_Design.entity.Study_group;
 import com.database_Design.Database_Design.service.StudygroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/studygroup")
+@RequestMapping("/studygroup")
 @RequiredArgsConstructor
 public class StudygroupController {
 
@@ -30,13 +31,13 @@ public class StudygroupController {
 	 */
 	@PostMapping("/create")
 	public ResponseEntity<Study_group> createStudyGroup(
-			@RequestParam String stdLeader,
+			@RequestParam String stdLeader, // Login_Id
 			@RequestParam String stdName,
-			@RequestParam String stdDescription,
+			@RequestParam String stdDescription, // 스터디 설명
 			@RequestParam String stdRule,
 			@RequestParam String notice,
-			@RequestParam Date stdStartDate,
-			@RequestParam Date stdEndDate) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date stdStartDate,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date stdEndDate) {
 
 		Study_group createdGroup = studygroupService.createStudyGroup(stdLeader, stdName, stdDescription, stdRule, notice, stdStartDate, stdEndDate);
 		return ResponseEntity.ok(createdGroup);
@@ -51,7 +52,7 @@ public class StudygroupController {
 	 */
 	@PostMapping("/join")
 	public ResponseEntity<Study_group> joinGroup(
-			@RequestParam Long stdId,
+			@RequestParam Long stdId, // 스터디 기본키
 			@RequestParam String stdLeader) {
 
 		Study_group joinedGroup = studygroupService.joinGroup(stdId, stdLeader);
