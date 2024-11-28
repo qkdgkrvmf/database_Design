@@ -29,7 +29,7 @@ public class StudygoalService {
                 .std_goal_start_date(std_goal_start_date)
                 .std_goal_end_date(std_goal_end_date)
                 .completed(false) // 기본값 설정
-                .user_id(user)
+                .user(user)
                 .build();
 
         return studyGoalRepository.save(goal);
