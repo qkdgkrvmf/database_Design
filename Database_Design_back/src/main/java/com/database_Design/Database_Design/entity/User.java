@@ -37,7 +37,7 @@ public class User {
 
     private Long point = 0L; // 포인트
 
-    private Long total_study=0L; // 학습량 - timer에서 외래키로 (분 단위)
+    private Long total_study=0L; // 사용자 학습량
 
     // Study_group과 다대다 관계 (N:M)
     @ManyToMany
@@ -47,10 +47,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), // User 외래 키
             inverseJoinColumns = @JoinColumn(name = "study_group_id") // Study_group 외래 키
     )
-    private List<Study_group> study_group = new ArrayList<>();
+    private List<Study_group> study_group = new ArrayList<>(); // 사용자 소속 스터디 그룹 리스트 
 
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Study_group_member> studyGroupMembers = new ArrayList<>(); // 스터디 그룹 회원들과의 관계
+    private List<Study_group_member> studyGroupMembers = new ArrayList<>(); // 사용자가 스터디 그룹의 회원으로 참여하는 관계 관리를 위한 변수 선언(사용자가 여러 그룹의 멤버로 소속될 수 있는 구조)
 
     @Builder // Builder 패턴 지원
     public User(Long id, String loginId, String password, String passwordCheck, String name, LocalDate birth, String phoneNumber, String grade, Long point, Long total_study) {
@@ -68,5 +68,5 @@ public class User {
 
     // Study_goal과의 관계 (1:N)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Study_goal> studyGoals = new ArrayList<>();
+    private List<Study_goal> studyGoals = new ArrayList<>(); // 사용자의 TodoList(할 일) 리스트
 }
