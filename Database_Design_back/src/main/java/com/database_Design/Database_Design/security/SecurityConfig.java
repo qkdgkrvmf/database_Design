@@ -1,20 +1,3 @@
-//package com.database_Design.Database_Design.security;
-//
-//
-//import lombok.Builder;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//
-//@Configuration
-//public class SecurityConfig {
-//
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//}
-
 package com.database_Design.Database_Design.security;
 
 import org.springframework.context.annotation.Bean;
@@ -36,11 +19,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화 (테스트용)
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users/register", "/users/login").permitAll() // 인증 없이 접근 가능
-                .anyRequest().authenticated() // 나머지 요청은 인증 필요
-            );
+                .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화 (테스트용)
+                .authorizeHttpRequests(auth -> auth
+                        //.requestMatchers("/users/register", "/users/login", "/users/{loinId}").permitAll() // 인증 없이 접근 가능
+                        //.anyRequest().authenticated() // 나머지 요청은 인증 필요
+                        .anyRequest().permitAll() // 모든 요청 인증 없이 허용
+                );
 
         return http.build();
     }

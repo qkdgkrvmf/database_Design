@@ -3,6 +3,7 @@ package com.database_Design.Database_Design.controller;
 import com.database_Design.Database_Design.entity.Study_goal;
 import com.database_Design.Database_Design.service.StudygoalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,8 @@ public class StudygoalController {
 	public ResponseEntity<Study_goal> addGoal(
 			@RequestParam String userId,
 			@RequestParam String content,
-			@RequestParam Date startDate,
-			@RequestParam Date endDate) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
 
 		Study_goal newGoal = studygoalService.addGoal(userId, content, startDate, endDate);
 		return ResponseEntity.ok(newGoal);
