@@ -22,7 +22,7 @@ public class Study_goal {
     // User와의 다대일 관계 (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false) // 외래키 설정
-    private User user; // 회원 ID (User 객체를 매핑)
+    private User user; // 회원 ID (User 객체를 매핑) -
 
 
     private String content; // 할 일 내용

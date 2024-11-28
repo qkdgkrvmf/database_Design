@@ -62,7 +62,6 @@ public class StudygrouppostService {
 
 
 
-
 	@Transactional
 	public void createGroupPost(Long std_id, Long member_id, String postContent) {
 		// 1. 스터디 그룹 확인
