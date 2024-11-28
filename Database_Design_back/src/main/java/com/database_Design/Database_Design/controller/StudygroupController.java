@@ -1,6 +1,8 @@
 package com.database_Design.Database_Design.controller;
 
+import com.database_Design.Database_Design.Repository.UserRepository;
 import com.database_Design.Database_Design.entity.Study_group;
+import com.database_Design.Database_Design.entity.User;
 import com.database_Design.Database_Design.service.StudygroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -8,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/studygroup")
@@ -16,6 +20,7 @@ import java.util.List;
 public class StudygroupController {
 
 	private final StudygroupService studygroupService;
+	private final UserRepository userRepository;
 
 	/**
 	 * 스터디 그룹 생성
@@ -51,12 +56,22 @@ public class StudygroupController {
 	 * @return 가입된 스터디 그룹 정보
 	 */
 	@PostMapping("/join")
-	public ResponseEntity<Study_group> joinGroup(
+	public ResponseEntity<Map<String, Object>> joinGroup(
 			@RequestParam Long stdId, // 스터디 기본키
 			@RequestParam String stdLeader) {
 
 		Study_group joinedGroup = studygroupService.joinGroup(stdId, stdLeader);
-		return ResponseEntity.ok(joinedGroup);
+
+		// 가입한 사용자 정보 찾기
+		User user = userRepository.findByLoginId(stdLeader)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+		// 응답 구성
+		Map<String, Object> response = new HashMap<>();
+		response.put("studyGroup", joinedGroup);
+		response.put("user", user);
+
+		return ResponseEntity.ok(response);
 	}
 
 	/**

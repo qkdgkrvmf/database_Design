@@ -36,6 +36,7 @@
 //}
 package com.database_Design.Database_Design.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,6 +58,7 @@ public class Study_group_member {
     // 다대일 관계: Study_group_member와 Study_group 연결
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
+    @JsonBackReference // 순환 참조 방지
     private Study_group studyGroup; // 해당 멤버가 속한 스터디 그룹
 
     // 다대일 관계: Study_group_member와 User 연결
