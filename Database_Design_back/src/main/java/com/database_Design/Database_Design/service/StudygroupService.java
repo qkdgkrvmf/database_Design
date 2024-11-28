@@ -118,7 +118,7 @@ public class StudygroupService {
         // 세부 정보 구성
         StringBuilder details = new StringBuilder();
         details.append("스터디 설명: ").append(studyGroup.getStd_description()).append("\n");
-        details.append("스터디 규칙: ").append(studyGroupPost.getGroup_notice()).append("\n");
+        details.append("스터디 규칙: ").append(studyGroupPost.getGroupNotice()).append("\n");
         details.append("현재 멤버 수: ").append(studyGroup.getStd_member_total()).append("\n");
 
         return details.toString();
