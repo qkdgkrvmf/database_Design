@@ -62,7 +62,7 @@ public class Study_group_member {
     // 다대일 관계: Study_group_member와 User 연결
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user_id; // 해당 멤버의 사용자 정보
+    private User user; // 해당 멤버의 사용자 정보
 
     // 일대다 관계: Study_group_member와 Study_group_post 연결
     @OneToMany(mappedBy = "group_post_writer", cascade = CascadeType.ALL, orphanRemoval = true)

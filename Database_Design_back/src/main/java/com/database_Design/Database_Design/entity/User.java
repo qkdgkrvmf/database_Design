@@ -72,6 +72,8 @@
 //}
 package com.database_Design.Database_Design.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -86,6 +88,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // 직렬화 방지
 public class User {
 
     @Id
@@ -117,6 +120,7 @@ public class User {
 
     // 일대다 관계: User와 Study_goal 연결
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // 순환참조 방지 - 직렬화
     private List<Study_goal> studyGoals = new ArrayList<>(); // 사용자의 학습 목표 목록
 
     // 일대다 관계: User와 Timer 연결
