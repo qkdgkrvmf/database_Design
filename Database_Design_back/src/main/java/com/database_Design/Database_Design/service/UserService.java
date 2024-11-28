@@ -29,7 +29,6 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
 
-
         // 새 회원 생성 및 초기값 설정
         User newUser = User.builder()
                 .loginId(loginId)
@@ -112,30 +111,30 @@ public class UserService {
     }
 
     // 사용자의 학습 시간을 기반으로 학습량, 포인트, 등급 업데이트
-    public void updatePointsAndGrade(String userid, Long timer_total) {
-        User user = userRepository.findByLoginId(userid)
+    public void updatePointsAndGrade(String loginId, Long timerTotal) {
+        User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
-        updateTotalStudy(user, timer_total);  // 학습량 업데이트
-        updatePoints(user, timer_total);     // 포인트 업데이트
-        updateGrade(user);                   // 등급 업데이트
+        // 학습량, 포인트, 등급 업데이트
+        user.setTotal_study(user.getTotal_study() + timerTotal); // 총 학습량
+        user.setPoint(user.getPoint() + (timerTotal / 10)); // 포인트
+        user.setGrade(calculateGrade(user.getPoint())); // 등급
 
-        userRepository.save(user);           // 업데이트된 유저 정보 저장
+        userRepository.save(user);
     }
 
-    // 총 학습량 업데이트
-    private void updateTotalStudy(User user, Long timer_total) {
-        user.setTotal_study(user.getTotal_study() + timer_total);
-    }
-
-    // 포인트 업데이트
-    private void updatePoints(User user, Long timer_total) {
-        user.setPoint(user.getPoint() + (timer_total / 10));
-    }
-
-    // 등급 업데이트
-    private void updateGrade(User user) {
-        user.setGrade(calculateGrade(user.getPoint()));
-    }
-
+//    // 총 학습량 업데이트
+//    private void updateTotalStudy(User user, Long timer_total) {
+//        user.setTotal_study(user.getTotal_study() + timer_total);
+//    }
+//
+//    // 포인트 업데이트
+//    private void updatePoints(User user, Long timer_total) {
+//        user.setPoint(user.getPoint() + (timer_total / 10));
+//    }
+//
+//    // 등급 업데이트
+//    private void updateGrade(User user) {
+//        user.setGrade(calculateGrade(user.getPoint()));
+//    }
 }

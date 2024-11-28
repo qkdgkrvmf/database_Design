@@ -56,11 +56,24 @@ public class UserController {
     }
 
     // 포인트 및 등급 업데이트
-    @PostMapping("/update-points")
+    @PostMapping("/updatePoints")
     public ResponseEntity<String> updatePoints(@RequestBody Map<String, Object> updateDetails) {
         String loginId = (String) updateDetails.get("loginId");
-        Long total_study = (Long) updateDetails.get("total_study");
-        userService.updatePointsAndGrade(loginId, total_study);
+        Long totalStudy = updateDetails.get("total_study") instanceof Number
+                ? ((Number) updateDetails.get("total_study")).longValue()
+                : null;
+
+        // 데이터 검증
+        if (loginId == null || loginId.isEmpty()) {
+            return ResponseEntity.badRequest().body("loginId를 제공해야 합니다.");
+        }
+        if (totalStudy == null) {
+            return ResponseEntity.badRequest().body("total_study를 제공해야 합니다.");
+        }
+
+        // 서비스 호출
+        userService.updatePointsAndGrade(loginId, totalStudy);
         return ResponseEntity.ok("포인트 및 등급이 성공적으로 업데이트되었습니다.");
     }
+
 }
