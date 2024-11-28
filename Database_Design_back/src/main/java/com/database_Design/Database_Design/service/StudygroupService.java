@@ -8,6 +8,7 @@ import com.database_Design.Database_Design.entity.Study_group;
 import com.database_Design.Database_Design.entity.Study_group_member;
 import com.database_Design.Database_Design.entity.Study_group_post;
 import com.database_Design.Database_Design.entity.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,31 +24,35 @@ public class StudygroupService {
     private final StudygroupMemberRepository studyGroupMemberRepository; // Study_group_member Repository 추가
 
     // 그룹 가입
+    @Transactional
     public Study_group joinGroup(Long std_id, String loginId) {
         Study_group studyGroup = studyGroupRepository.findById(std_id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
 
-        if (studyGroup.getStd_member_total() >= 10) { // 최대 멤버 제한
-            throw new IllegalStateException("스터디 그룹 정원이 가득 찼습니다.");
-        }
-
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        // 스터디 멤버 추가
-        Study_group_member member = new Study_group_member();
-        member.setStudyGroup(studyGroup);
-        member.setUser(user);
-        member.setRole("멤버");
-        studyGroupMemberRepository.save(member);
+        // 이미 그룹에 가입되어 있는지 확인
+        boolean alreadyJoined = studyGroupMemberRepository.findByStudyGroupAndUser(studyGroup, user).isPresent();
+        if (alreadyJoined) {
+            throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다."); // 예외 발생
+        }
 
-        // 스터디 멤버 수 증가
+        // 새로운 멤버 추가
+        Study_group_member newMember = new Study_group_member();
+        newMember.setStudyGroup(studyGroup);
+        newMember.setUser(user);
+        newMember.setRole("스터디원"); // 기본 역할 설정
+        studyGroupMemberRepository.save(newMember);
+
+        // 멤버 수 증가
         studyGroup.setStd_member_total(studyGroup.getStd_member_total() + 1);
 
-        return studyGroupRepository.save(studyGroup);
+        return studyGroup;
     }
 
     // 그룹 탈퇴
+    @Transactional // 트랜잭션 경계를 명시
     public Study_group leaveGroup(Long std_id, String loginId) {
         Study_group studyGroup = studyGroupRepository.findById(std_id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));

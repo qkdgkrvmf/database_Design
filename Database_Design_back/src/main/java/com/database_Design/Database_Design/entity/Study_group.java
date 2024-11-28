@@ -55,6 +55,7 @@
 //}
 package com.database_Design.Database_Design.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -85,6 +86,7 @@ public class Study_group {
 
     // 일대다 관계: Study_group과 Study_group_member 연결
     @OneToMany(mappedBy = "studyGroup", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Study_group_member> std_members = new ArrayList<>(); // 스터디 그룹의 멤버 목록
 
     // 일대다 관계: Study_group과 Timer 연결
