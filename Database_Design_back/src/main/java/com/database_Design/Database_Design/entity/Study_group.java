@@ -97,7 +97,7 @@ public class Study_group {
     private String std_description; // 스터디 그룹 설명
     private Long member_daily_std; // 멤버 일일 학습량
     private Long group_daily_std; // 그룹 일일 총 학습량
-    private Long std_member_total; // 현재 그룹 멤버 총 수
+    private Long std_member_total; // 현재 그룹 멤버 총
     private Date std_start_date; // 스터디 그룹 시작 날짜
     private Date std_end_date; // 스터디 그룹 종료 날짜
     private String group_rule; // 스터디 그룹 규칙

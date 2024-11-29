@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -113,15 +114,26 @@ public class StudygroupService {
         Study_group studyGroup = studyGroupRepository.findById(std_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 스터디를 찾을 수 없습니다."));
 
-        // 게시판 규칙 조회
-        Study_group_post studyGroupPost = studygrouppostRepository.findById(std_id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 스터디의 게시판 규칙을 찾을 수 없습니다."));
+//        // 게시판 규칙 조회
+//        Study_group_post studyGroupPost = studygrouppostRepository.findById(std_id)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 스터디의 게시판 규칙을 찾을 수 없습니다."));
+
+        // 스터디 멤버 조회
+        List<Study_group_member> members = studyGroupMemberRepository.findByStudyGroup(studyGroup);
 
         // 세부 정보 구성
         StringBuilder details = new StringBuilder();
         details.append("스터디 설명: ").append(studyGroup.getStd_description()).append("\n");
         details.append("스터디 규칙: ").append(studyGroup.getGroup_rule()).append("\n");
-        details.append("현재 멤버 수: ").append(studyGroup.getStd_member_total()).append("\n");
+        // 멤버 리스트 추가
+        details.append("멤버 리스트:\n");
+        String memberDetails = members.stream()
+                .map(member -> "- " + member.getUser().getName() + " (" + member.getRole() + ")")
+                .collect(Collectors.joining("\n"));
+        details.append(memberDetails);
+
+        // 멤버 수는 실제 리스트 크기로 설정
+        details.append("\n현재 멤버 수: ").append(members.size());
 
         return details.toString();
     }
