@@ -41,11 +41,12 @@ public class StudygroupController {
 			@RequestParam String stdName,
 			@RequestParam String stdDescription, // 스터디 설명
 			@RequestParam String stdRule,
-			@RequestParam String notice,
+			//@RequestParam String notice,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date stdStartDate,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date stdEndDate) {
 
-		Study_group createdGroup = studygroupService.createStudyGroup(stdLeader, stdName, stdDescription, stdRule, notice, stdStartDate, stdEndDate);
+		//Study_group createdGroup = studygroupService.createStudyGroup(stdLeader, stdName, stdDescription, stdRule, notice, stdStartDate, stdEndDate);
+		Study_group createdGroup = studygroupService.createStudyGroup(stdLeader, stdName, stdDescription, stdRule, stdStartDate, stdEndDate);
 		return ResponseEntity.ok(createdGroup);
 	}
 
