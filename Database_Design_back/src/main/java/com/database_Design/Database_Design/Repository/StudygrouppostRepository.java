@@ -12,8 +12,7 @@ public interface StudygrouppostRepository extends JpaRepository<Study_group_post
 
     // 특정 스터디 그룹의 공지사항 조회
     // JPQL 기반 쿼리
-    @Query("SELECT p FROM Study_group_post p WHERE p.studyGroup = :studyGroup AND p.groupNotice = :groupNotice")
-    Optional<Study_group_post> findNotice(@Param("studyGroup") Study_group studyGroup, @Param("groupNotice") String groupNotice);
-
+    @Query("SELECT s.group_rule FROM Study_group s WHERE s = :studyGroup")
+    Optional<String> findGroupRule(@Param("studyGroup") Study_group studyGroup);
 
 }

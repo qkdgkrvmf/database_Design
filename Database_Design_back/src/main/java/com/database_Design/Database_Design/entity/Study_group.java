@@ -50,4 +50,8 @@ public class Study_group {
 
     @Column(name = "stdstate")
     private Boolean stdstate = true; // 스터디 모집 상태
+
+    public Object getstd_Id() {
+        return std_id;
+    }
 }

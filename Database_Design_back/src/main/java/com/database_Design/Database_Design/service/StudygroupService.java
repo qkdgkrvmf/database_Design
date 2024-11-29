@@ -105,8 +105,10 @@ public class StudygroupService {
 
 
     // 스터디 생성
+//    public Study_group createStudyGroup(String std_leader, String std_name, String std_description,
+//                                        String std_rule, String notice, Date std_start_date, Date std_end_date) {
     public Study_group createStudyGroup(String std_leader, String std_name, String std_description,
-                                        String std_rule, String notice, Date std_start_date, Date std_end_date) {
+                                        String std_rule, Date std_start_date, Date std_end_date) {
         User leader = userRepository.findByLoginId(std_leader)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 

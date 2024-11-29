@@ -72,5 +72,5 @@ public class Study_group_post {
     @Column(nullable = false)
     private Date group_post_date; // 게시글 작성 날짜
 
-    private String groupNotice; // 스터디 그룹 공지사항
+    //private String groupNotice; // 스터디 그룹 공지사항
 }
