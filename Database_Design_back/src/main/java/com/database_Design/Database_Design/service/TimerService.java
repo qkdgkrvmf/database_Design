@@ -68,4 +68,89 @@ public class TimerService {
                 .mapToLong(Timer::getTimer_total)
                 .sum(); // 스터디 일일 학습량
     }
+
+
+    // 타이머 시작
+    // 타이머 시작 (기존 타이머를 재사용하거나 새로 생성)
+    public Timer startTimer(Long userId, Long studyGroupId, String title, String content) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // 실행 중인 타이머가 있는지 확인
+        List<Timer> activeTimers = timerRepository.findByUserAndStatus(user, Timer.TimerStatus.STARTED);
+        if (!activeTimers.isEmpty()) {
+            // 실행 중인 타이머가 있으면 예외를 던지거나 상태를 변경 (선택에 따라 동작 설정)
+            Timer activeTimer = activeTimers.get(0); // 첫 번째 실행 중인 타이머
+            activeTimer.setTimerStart(LocalDateTime.now()); // 시작 시간을 갱신
+            activeTimer.setStatus(Timer.TimerStatus.STARTED);
+            return timerRepository.save(activeTimer);
+        }
+
+        // 실행 중인 타이머가 없으면 새로 생성
+        Timer timer = new Timer();
+        timer.setTimer_title(title);
+        timer.setTimer_content(content);
+        timer.setTimerStart(LocalDateTime.now());
+        timer.setTimer_total(0L); // 초기값
+        timer.setStatus(Timer.TimerStatus.STARTED);
+        timer.setUser(user);
+
+        if (studyGroupId != null) {
+            Study_group studyGroup = studyGroupRepository.findById(studyGroupId)
+                    .orElseThrow(() -> new IllegalArgumentException("Study group not found"));
+            timer.setStudyGroup(studyGroup);
+        }
+
+        return timerRepository.save(timer);
+    }
+
+    // 타이머 종료
+    public Timer stopTimer(Long timerId) {
+        Timer timer = timerRepository.findById(timerId)
+                .orElseThrow(() -> new IllegalArgumentException("Timer not found"));
+
+        if (timer.getStatus() != Timer.TimerStatus.STARTED) {
+            throw new IllegalStateException("Timer is not running.");
+        }
+
+        timer.setTimerEnd(LocalDateTime.now());
+        long totalSeconds = java.time.Duration.between(timer.getTimerStart(), timer.getTimerEnd()).getSeconds();
+        timer.setTimer_total(totalSeconds);
+        timer.setStatus(Timer.TimerStatus.STOPPED);
+
+        return timerRepository.save(timer);
+    }
+
+    // 타이머 일시 정지
+    public Timer pauseTimer(Long timerId) {
+        Timer timer = timerRepository.findById(timerId)
+                .orElseThrow(() -> new IllegalArgumentException("Timer not found"));
+
+        if (timer.getStatus() != Timer.TimerStatus.STARTED) {
+            throw new IllegalStateException("Timer is not running.");
+        }
+
+        timer.setTimerEnd(LocalDateTime.now());
+        long elapsedSeconds = java.time.Duration.between(timer.getTimerStart(), timer.getTimerEnd()).getSeconds();
+        timer.setTimer_total(timer.getTimer_total() + elapsedSeconds);
+        timer.setStatus(Timer.TimerStatus.PAUSED);
+
+        return timerRepository.save(timer);
+    }
+
+    // 타이머 재시작
+    public Timer resumeTimer(Long timerId) {
+        Timer timer = timerRepository.findById(timerId)
+                .orElseThrow(() -> new IllegalArgumentException("Timer not found"));
+
+        if (timer.getStatus() != Timer.TimerStatus.PAUSED) {
+            throw new IllegalStateException("Timer is not paused.");
+        }
+
+        timer.setTimerStart(LocalDateTime.now());
+        timer.setStatus(Timer.TimerStatus.STARTED);
+
+        return timerRepository.save(timer);
+    }
+
 }
