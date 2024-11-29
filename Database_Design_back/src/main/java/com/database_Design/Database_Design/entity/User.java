@@ -105,6 +105,10 @@ public class User {
     private Long point = 0L; // 사용자 포인트
     private Long total_study = 0L; // 사용자 총 학습량
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // study_member는 study_group와 user의 중간 테이블 역할 따라서 user 입장에서 어떤 그룹에 속했는지 확인하려면 해당 필드가 필요
+    @JsonIgnore // Study_group_member 리스트 무시
+    private List<Study_group_member> studyGroupMembers = new ArrayList<>();
+
     // 다대다 관계: User와 Study_group 연결
     @ManyToMany
     @JoinTable(
