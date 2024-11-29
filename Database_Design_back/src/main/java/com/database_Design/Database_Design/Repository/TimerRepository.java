@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TimerRepository extends JpaRepository<Timer, Long> {
+    // 실행 중인 타이머 찾기
+    List<Timer> findByUserAndStatus(User user, Timer.TimerStatus status);
+    
     // 특정 사용자의 타이머 기록 조회
     List<Timer> findByUser(User user);
 

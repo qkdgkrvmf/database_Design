@@ -74,6 +74,7 @@ package com.database_Design.Database_Design.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -129,6 +130,7 @@ public class User {
 
     // 일대다 관계: User와 Timer 연결
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // JSON 직렬화 시 참조 방향 설정
     private List<Timer> timers = new ArrayList<>(); // 사용자의 타이머 목록
 
     @Builder
