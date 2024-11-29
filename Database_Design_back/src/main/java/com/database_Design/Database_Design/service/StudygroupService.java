@@ -39,40 +39,70 @@ public class StudygroupService {
             throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다."); // 예외 발생
         }
 
-        // 새로운 멤버 추가
+        // 멤버 추가
         Study_group_member newMember = new Study_group_member();
         newMember.setStudyGroup(studyGroup);
         newMember.setUser(user);
-        newMember.setRole("스터디원"); // 기본 역할 설정
+        newMember.setRole("스터디원");
         studyGroupMemberRepository.save(newMember);
 
-        // 멤버 수 증가
+        // 멤버 수 업데이트
         studyGroup.setStd_member_total(studyGroup.getStd_member_total() + 1);
-
         return studyGroup;
     }
 
     // 그룹 탈퇴
-    @Transactional // 트랜잭션 경계를 명시
+    @Transactional
     public Study_group leaveGroup(Long std_id, String loginId) {
+        // 스터디 그룹 조회
         Study_group studyGroup = studyGroupRepository.findById(std_id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
 
-        if (studyGroup.getStd_member_total() <= 0) {
-            throw new IllegalStateException("스터디 그룹에 멤버가 없습니다.");
-        }
-
+        // 사용자 조회
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        // 스터디 멤버 삭제
+        // 리더가 탈퇴하려는 경우
+        if (studyGroup.getStd_leader().equals(user)) {
+            List<Study_group_member> members = studyGroupMemberRepository.findByStudyGroup(studyGroup);
+
+            if (members.size() > 1) {
+                // 다른 멤버가 있다면 리더를 변경
+                Study_group_member newLeaderMember = members.stream()
+                        .filter(member -> !member.getUser().equals(user)) // 리더 외 다른 멤버 찾기
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalStateException("리더를 위임할 멤버가 없습니다."));
+
+                studyGroup.setStd_leader(newLeaderMember.getUser());
+                newLeaderMember.setRole("리더");
+                studyGroupMemberRepository.save(newLeaderMember);
+            } else {
+                // 멤버가 없으면 그룹 종료 처리
+                studyGroup.setStdstate(false); // 상태를 종료로 변경
+                studyGroup.setStd_end_date(new Date());
+                studyGroupRepository.save(studyGroup);
+                return studyGroup;
+            }
+        }
+
+        // 그룹 멤버 삭제
         studyGroupMemberRepository.deleteByStudyGroupAndUser(studyGroup, user);
 
-        // 스터디 멤버 수 감소
+        // Hibernate 로그 확인 (디버깅 시에만 필요)
+        System.out.println("삭제된 사용자: " + loginId);
+
+        // 멤버 수 감소
         studyGroup.setStd_member_total(studyGroup.getStd_member_total() - 1);
+
+        // 멤버 수가 0이면 그룹 종료 처리
+        if (studyGroup.getStd_member_total() == 0) {
+            studyGroup.setStdstate(false); // 상태를 종료로 변경
+            studyGroup.setStd_end_date(new Date());
+        }
 
         return studyGroupRepository.save(studyGroup);
     }
+
 
     // 스터디 생성
     public Study_group createStudyGroup(String std_leader, String std_name, String std_description,
@@ -158,5 +188,16 @@ public class StudygroupService {
         // 변경된 스터디 그룹 저장
         return studyGroupRepository.save(studyGroup);
     }
+
+    @Transactional
+    public void deleteGroup(Long stdId) {
+        // 스터디 그룹 조회
+        Study_group studyGroup = studyGroupRepository.findById(stdId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+
+        // 삭제 작업 수행
+        studyGroupRepository.delete(studyGroup);
+    }
+
 }
 
