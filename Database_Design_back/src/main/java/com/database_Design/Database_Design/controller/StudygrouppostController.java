@@ -60,10 +60,11 @@ public class StudygrouppostController {
 	 * @param updatedContent 수정할 게시글 내용
 	 * @return 성공 메시지
 	 */
-	@PutMapping("/{groupId}/{postId}/update-post")
+	@PutMapping("/{groupId}/update-post")
 	public ResponseEntity<String> updateGroupPost(
 			@PathVariable Long groupId,
-			@PathVariable Long postId,
+			//@PathVariable Long postId,
+			@RequestParam Long postId,
 			@RequestParam Long userId,
 			@RequestParam String updatedContent) {
 
@@ -80,10 +81,10 @@ public class StudygrouppostController {
 	 * @param userId 삭제 요청자 ID
 	 * @return 성공 메시지
 	 */
-	@DeleteMapping("/{groupId}/{postId}/delete-post")
+	@DeleteMapping("/{groupId}/delete-post")
 	public ResponseEntity<String> deleteGroupPost(
 			@PathVariable Long groupId,
-			@PathVariable Long postId,
+			@RequestParam Long postId,
 			@RequestParam Long userId) {
 
 		studygrouppostService.deleteGroupPost(groupId, postId, userId);

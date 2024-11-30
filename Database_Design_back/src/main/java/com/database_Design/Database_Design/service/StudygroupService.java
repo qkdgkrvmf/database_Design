@@ -25,18 +25,44 @@ public class StudygroupService {
     private final StudygroupMemberRepository studyGroupMemberRepository; // Study_group_member Repository 추가
 
     // 그룹 가입
+//    @Transactional
+//    public Study_group joinGroup(Long std_id, String loginId) {
+//        Study_group studyGroup = studyGroupRepository.findById(std_id)
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+//
+//        User user = userRepository.findByLoginId(loginId)
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+//
+//        // 이미 그룹에 가입되어 있는지 확인
+//        boolean alreadyJoined = studyGroupMemberRepository.findByStudyGroupAndUser(studyGroup, user).isPresent();
+//        if (alreadyJoined) {
+//            throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다."); // 예외 발생
+//        }
+//
+//        // 멤버 추가
+//        Study_group_member newMember = new Study_group_member();
+//        newMember.setStudyGroup(studyGroup);
+//        newMember.setUser(user);
+//        newMember.setRole("스터디원");
+//        studyGroupMemberRepository.save(newMember);
+//
+//        // 멤버 수 업데이트
+//        studyGroup.setStd_member_total(studyGroup.getStd_member_total() + 1);
+//        return studyGroup;
+//    }
+
     @Transactional
     public Study_group joinGroup(Long std_id, String loginId) {
         Study_group studyGroup = studyGroupRepository.findById(std_id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
 
         User user = userRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         // 이미 그룹에 가입되어 있는지 확인
         boolean alreadyJoined = studyGroupMemberRepository.findByStudyGroupAndUser(studyGroup, user).isPresent();
         if (alreadyJoined) {
-            throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다."); // 예외 발생
+            throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다.");
         }
 
         // 멤버 추가
@@ -46,10 +72,15 @@ public class StudygroupService {
         newMember.setRole("스터디원");
         studyGroupMemberRepository.save(newMember);
 
+        // 사용자가 속한 그룹 리스트 업데이트
+        user.getStudy_group().add(studyGroup);
+        userRepository.save(user); // 사용자 엔티티 업데이트
+
         // 멤버 수 업데이트
         studyGroup.setStd_member_total(studyGroup.getStd_member_total() + 1);
         return studyGroup;
     }
+
 
     // 그룹 탈퇴
     @Transactional
