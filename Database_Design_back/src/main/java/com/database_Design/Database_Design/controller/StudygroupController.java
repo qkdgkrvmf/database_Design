@@ -30,7 +30,7 @@ public class StudygroupController {
 	 * @param stdName         스터디 이름
 	 * @param stdDescription  스터디 설명
 	 * @param stdRule         스터디 규칙
-	 * @param notice          공지사항
+//	 * @param notice          공지사항
 	 * @param stdStartDate    시작 날짜
 	 * @param stdEndDate      종료 날짜
 	 * @return 생성된 스터디 그룹 정보
