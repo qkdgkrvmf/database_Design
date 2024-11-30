@@ -172,19 +172,44 @@ public class StudygrouppostService {
 	}
 
 
+//	@Transactional
+//	public void deleteGroupPost(Long post_id, Long user_id, Long userId) {
+//		// 1. 게시글 확인
+//		Study_group_post post = studyGroupPostRepository.findById(post_id)
+//				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+//
+//		// 2. 삭제 권한 확인 (작성자 또는 스터디장만 가능)
+//		if (!post.getGroup_post_writer().equals(user_id) &&
+//				!post.getStudyGroup().getStd_leader().getId().equals(user_id)) {
+//			throw new SecurityException("게시글 삭제 권한이 없습니다.");
+//		}
+//
+//		// 3. 게시글 삭제
+//		studyGroupPostRepository.delete(post);
+//	}
+
 	@Transactional
-	public void deleteGroupPost(Long post_id, Long user_id, Long userId) {
-		// 1. 게시글 확인
-		Study_group_post post = studyGroupPostRepository.findById(post_id)
+	public void deleteGroupPost(Long groupId, Long postId, Long userId) {
+		// 1. 스터디 그룹 유효성 검사
+		Study_group studyGroup = studyGroupRepository.findById(groupId)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
+
+		// 2. 게시글 유효성 검사
+		Study_group_post post = studyGroupPostRepository.findById(postId)
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
-		// 2. 삭제 권한 확인 (작성자 또는 스터디장만 가능)
-		if (!post.getGroup_post_writer().equals(user_id) &&
-				!post.getStudyGroup().getStd_leader().getId().equals(user_id)) {
-			throw new SecurityException("게시글 삭제 권한이 없습니다.");
+		// 3. 게시글과 그룹 관계 확인
+		if (!post.getStudyGroup().getstd_Id().equals(groupId)) {
+			throw new IllegalArgumentException("게시글이 해당 스터디 그룹에 속하지 않습니다.");
 		}
 
-		// 3. 게시글 삭제
+		// 4. 삭제 권한 확인
+		if (!post.getGroup_post_writer().getUser().getId().equals(userId)) {
+			throw new IllegalArgumentException("삭제 권한이 없습니다.");
+		}
+
+		// 5. 게시글 삭제
 		studyGroupPostRepository.delete(post);
 	}
+
 }
