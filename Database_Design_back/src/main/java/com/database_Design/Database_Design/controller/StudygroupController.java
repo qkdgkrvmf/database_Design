@@ -71,7 +71,7 @@ public class StudygroupController {
 		// 응답 구성
 		Map<String, Object> response = new HashMap<>();
 		response.put("studyGroup", joinedGroup);
-		response.put("user", user);
+		//response.put("user", user);
 
 		return ResponseEntity.ok(response);
 	}

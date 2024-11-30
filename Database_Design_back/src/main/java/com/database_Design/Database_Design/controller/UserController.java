@@ -85,8 +85,12 @@ import com.database_Design.Database_Design.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Map;
+import java.util.List;
+import com.database_Design.Database_Design.entity.Study_group;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -120,11 +124,38 @@ public class UserController {
     }
 
     // 회원 정보 조회
+//    @GetMapping("/research-user")
+//    public ResponseEntity<User> getUserInfo(@RequestParam String loginId) {
+//        User user = userService.getUserInfo(loginId);
+//        return ResponseEntity.ok(user);
+//    }
+
     @GetMapping("/research-user")
-    public ResponseEntity<User> getUserInfo(@RequestParam String loginId) {
+    public ResponseEntity<Map<String, Object>> getUserInfo(@RequestParam String loginId) {
         User user = userService.getUserInfo(loginId);
-        return ResponseEntity.ok(user);
+
+        // study_group에서 std_Id만 추출
+        List<Long> studyGroupIds = user.getStudy_group().stream()
+            .map(Study_group::getstd_Id) // Study_group 클래스의 메서드 사용
+            .collect(Collectors.toList());
+
+        // 응답 데이터 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", user.getId());
+        response.put("loginId", user.getLoginId());
+        response.put("password", user.getPassword());
+        response.put("passwordCheck", user.getPasswordCheck());
+        response.put("name", user.getName());
+        response.put("birth", user.getBirth());
+        response.put("phoneNumber", user.getPhoneNumber());
+        response.put("grade", user.getGrade());
+        response.put("point", user.getPoint());
+        response.put("total_study", user.getTotal_study());
+        response.put("std_Id", studyGroupIds); // std_Id 리스트 추가
+
+        return ResponseEntity.ok(response);
     }
+
 
 
     // 회원 삭제
