@@ -62,7 +62,7 @@ public class StudygrouppostService {
 		newPost.setStudyGroup(studyGroup); // 스터디 그룹 설정
 		newPost.setGroup_post_writer(member); // 작성자를 멤버로 설정
 		newPost.setGroup_post_content(postContent); // 게시글 내용 설정
-		newPost.setGroup_post_date(new Date()); // 작성 날짜 설정
+//		newPost.setGroup_post_date(new Date()); // 작성 날짜 설정
 
 		// 4. 게시글 저장
 		studyGroupPostRepository.save(newPost);
