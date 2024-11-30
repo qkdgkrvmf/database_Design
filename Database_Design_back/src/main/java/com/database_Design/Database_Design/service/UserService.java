@@ -56,31 +56,6 @@ public class UserService {
         return user; // 로그인 성공 시 User 객체 반환
     }
 
-//    // 회원가입 시 비밀번호 암호화
-//    public User SecretPassword(String loginId, String password, String passwordCheck, String name, Long birth, String phoneNumber) {
-//        if (userRepository.findByUserid(loginId).isPresent()) {
-//            throw new IllegalArgumentException("이미 존재하는 회원 ID입니다.");
-//        }
-//
-//        if (!password.equals(passwordCheck)) {
-//            throw new IllegalArgumentException("비밀번호 확인이 일치하지 않습니다.");
-//        }
-//
-//        User newUser = User.builder()
-//                .loginId(loginId)
-//                .password(passwordEncoder.encode(password)) // 암호화된 비밀번호 저장
-//                .passwordCheck(passwordEncoder.encode(passwordCheck))
-//                .name(name)
-//                .birth(birth)
-//                .phoneNumber(phoneNumber)
-//                .grade("알")
-//                .point(0L)
-//                .total_study(0L)
-//                .build();
-//
-//        return userRepository.save(newUser);
-//    }
-
     // 회원 정보 조회
     public User getUserInfo(String userid) {
         return userRepository.findByLoginId(userid)
@@ -123,18 +98,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    // 총 학습량 업데이트
-//    private void updateTotalStudy(User user, Long timer_total) {
-//        user.setTotal_study(user.getTotal_study() + timer_total);
-//    }
-//
-//    // 포인트 업데이트
-//    private void updatePoints(User user, Long timer_total) {
-//        user.setPoint(user.getPoint() + (timer_total / 10));
-//    }
-//
-//    // 등급 업데이트
-//    private void updateGrade(User user) {
-//        user.setGrade(calculateGrade(user.getPoint()));
-//    }
 }

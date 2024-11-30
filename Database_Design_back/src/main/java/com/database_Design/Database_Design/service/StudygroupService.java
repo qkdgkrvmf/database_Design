@@ -24,33 +24,6 @@ public class StudygroupService {
     private final StudygrouppostRepository studygrouppostRepository;
     private final StudygroupMemberRepository studyGroupMemberRepository; // Study_group_member Repository 추가
 
-    // 그룹 가입
-//    @Transactional
-//    public Study_group joinGroup(Long std_id, String loginId) {
-//        Study_group studyGroup = studyGroupRepository.findById(std_id)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 그룹입니다."));
-//
-//        User user = userRepository.findByLoginId(loginId)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-//
-//        // 이미 그룹에 가입되어 있는지 확인
-//        boolean alreadyJoined = studyGroupMemberRepository.findByStudyGroupAndUser(studyGroup, user).isPresent();
-//        if (alreadyJoined) {
-//            throw new IllegalStateException("사용자는 이미 스터디 그룹에 가입되어 있습니다."); // 예외 발생
-//        }
-//
-//        // 멤버 추가
-//        Study_group_member newMember = new Study_group_member();
-//        newMember.setStudyGroup(studyGroup);
-//        newMember.setUser(user);
-//        newMember.setRole("스터디원");
-//        studyGroupMemberRepository.save(newMember);
-//
-//        // 멤버 수 업데이트
-//        studyGroup.setStd_member_total(studyGroup.getStd_member_total() + 1);
-//        return studyGroup;
-//    }
-
     @Transactional
     public Study_group joinGroup(Long std_id, String loginId) {
         Study_group studyGroup = studyGroupRepository.findById(std_id)
@@ -176,10 +149,6 @@ public class StudygroupService {
         // 스터디 정보 조회
         Study_group studyGroup = studyGroupRepository.findById(std_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 스터디를 찾을 수 없습니다."));
-
-//        // 게시판 규칙 조회
-//        Study_group_post studyGroupPost = studygrouppostRepository.findById(std_id)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 스터디의 게시판 규칙을 찾을 수 없습니다."));
 
         // 스터디 멤버 조회
         List<Study_group_member> members = studyGroupMemberRepository.findByStudyGroup(studyGroup);
