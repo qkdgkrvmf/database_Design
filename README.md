@@ -18,6 +18,7 @@ AllInMe는 사용자가 스터디 그룹 관리, 타이머 활용, 활동 기록
 
 ### # 구현 예시
 ![image](https://github.com/user-attachments/assets/407fdc78-c143-4a38-8abe-434a04f1cdf5)
+[Figma Design Link](https://www.figma.com/design/t5hhWur5QTrBQ8qLTZZErt/DBD_front?node-id=0-1&node-type=canvas&t=og6Gr6EJBaip9SZ1-0)
 
 ---
 
