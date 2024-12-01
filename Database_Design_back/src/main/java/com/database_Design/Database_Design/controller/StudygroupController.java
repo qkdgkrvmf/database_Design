@@ -57,7 +57,7 @@ public class StudygroupController {
 	 * @param loginId  가입 요청 사용자 ID
 	 * @return 가입된 스터디 그룹 정보
 	 */
-	@PostMapping("/join") // 근데 중복 가입 에러남
+	@PostMapping("/join")
 	public ResponseEntity<Map<String, Object>> joinGroup(
 			@RequestParam Long stdId, // 스터디 기본키
 			@RequestParam String loginId) { // 가입하려는 사용자 LoginId
