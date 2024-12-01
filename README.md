@@ -7,16 +7,17 @@ AllInMe는 사용자가 스터디 그룹 관리, 타이머 활용, 활동 기록
 ## Features
 
 ### # 개념적 설계
-- 
+![image](https://github.com/user-attachments/assets/5d8f52ac-b0ee-41fe-91f2-2589c275c26d)
 
 ### # 논리적 설계
-
+![image](https://github.com/user-attachments/assets/41b28272-fc8c-42ce-b9d3-792bbe67cd9d)
 
 ### # 물리적 설계
-
+![image](https://github.com/user-attachments/assets/89163268-1bd4-464d-9c86-47524953f969)
 
 
 ### # 구현 예시
+![image](https://github.com/user-attachments/assets/407fdc78-c143-4a38-8abe-434a04f1cdf5)
 
 ---
 
