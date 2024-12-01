@@ -47,10 +47,6 @@ public class User {
     )
     private List<Study_group> study_group = new ArrayList<>(); // 사용자가 속한 스터디 그룹 목록
 
-//    // 일대다 관계: User와 Study_group_member 연결
-//    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Study_group_member> studyGroupMembers = new ArrayList<>(); // 사용자의 스터디 그룹 멤버 목록 리스트 ( 사용 예시 : 특정 사용자가 어떤 스터디 그룹에 속해 있는지 확인, 사용자의 그룹 내 역할 확인 등)
-
     // 일대다 관계: User와 Study_goal 연결
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // 순환참조 방지 - 직렬화
